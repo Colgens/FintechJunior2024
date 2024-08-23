@@ -1,0 +1,25 @@
+# IDEs
+.idea/
+*.iml
+/shelf/
+
+# Java build artifacts and compiled classes
+target/
+build/
+out/
+*.class
+*.jar
+*.war
+*.ear
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Maven wrapper files
+.mvn/
+!mvnw
+!mvnw.cmd
