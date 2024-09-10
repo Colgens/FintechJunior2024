@@ -102,17 +102,67 @@ public class CustomLinkedList<T> {
     }
 
     public void addAll(CustomLinkedList<T> elements) {
-        for (int i = 0; i < elements.size; i++) {
-            add(elements.get(i));
+        if (elements.isEmpty()) {
+            return;
         }
+
+        if (isEmpty()) {
+            head = elements.head;
+        } else {
+            tail.next = elements.head;
+            elements.head.prev = tail;
+        }
+        tail = elements.tail;
+        size += elements.size();
+    }
+
+
+    public void addAll(int index, CustomLinkedList<T> elements) {
+        addAllInternal(index, elements.head, elements.tail, elements.size());
     }
 
     public void addAll(int index, Collection<? extends T> elements) {
-        checkAvailableIndex(index);
+        if (elements.isEmpty()) {
+            return;
+        }
+
+        ListNode<T> dummyHead = new ListNode<>(null, null, null);
+        ListNode<T> current = dummyHead;
 
         for (T element : elements) {
-            add(index++, element);
+            ListNode<T> newNode = new ListNode<>(current, element, null);
+            current.next = newNode;
+            current = newNode;
         }
+
+        addAllInternal(index, dummyHead.next, current, elements.size());
+    }
+
+    private void addAllInternal(int index, ListNode<T> newHead, ListNode<T> newTail, int newSize) {
+        checkAvailableIndex(index);
+
+        if (newSize == 0) {
+            return;
+        }
+
+        ListNode<T> current = (index == size) ? null : getNode(index);
+        ListNode<T> previous = (current == null) ? tail : current.prev;
+
+        if (previous == null) {
+            head = newHead;
+        } else {
+            previous.next = newHead;
+            newHead.prev = previous;
+        }
+
+        if (current == null) {
+            tail = newTail;
+        } else {
+            newTail.next = current;
+            current.prev = newTail;
+        }
+
+        size += newSize;
     }
 
     public int size() {

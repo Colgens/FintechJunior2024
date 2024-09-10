@@ -90,7 +90,7 @@ class CustomLinkedListTest {
     }
 
     @Test
-    void isEmpty() {
+    void testIsEmpty() {
         CustomLinkedList<Integer> list = new CustomLinkedList<>();
         assertTrue(list.isEmpty());
         list.add(5);
@@ -138,5 +138,13 @@ class CustomLinkedListTest {
         CustomLinkedList<Integer> list = new CustomLinkedList<>();
         list.add(1);
         assertThrows(IndexOutOfBoundsException.class, () -> list.get(1));
+    }
+
+    @Test
+    void testAddAllAtIndex() {
+        CustomLinkedList<Integer> list1 = new CustomLinkedList<>(List.of(4, 8, 15, 16, 23, 42));
+        CustomLinkedList<Integer> list2 = new CustomLinkedList<>(List.of(0, 0, 0, 0));
+        list1.addAll(2, list2);
+        assertEquals("[4, 8, 0, 0, 0, 0, 15, 16, 23, 42]", list1.toString());
     }
 }
