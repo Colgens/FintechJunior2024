@@ -6,12 +6,10 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 public class CategoryRepository implements GenericRepository<Category, Long> {
     private final ConcurrentHashMap<Long, Category> categories = new ConcurrentHashMap<>();
-    private final AtomicLong idGenerator = new AtomicLong(1);
 
     @Override
     public List<Category> findAll() {
@@ -25,9 +23,6 @@ public class CategoryRepository implements GenericRepository<Category, Long> {
 
     @Override
     public Category save(Category category) {
-        if (category.getId() == null) {
-            category.setId(idGenerator.getAndIncrement());
-        }
         categories.put(category.getId(), category);
         return category;
     }
