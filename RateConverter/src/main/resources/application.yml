@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: RateConverter
+  cache:
+    type: caffeine
+
+currency:
+  service:
+    url: http://www.cbr.ru/scripts/XML_daily.asp
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 60s
+    instances:
+      cbrService:
+        base-config: default
